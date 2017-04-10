@@ -17,7 +17,6 @@ RUN apk --update add bash \
     nmap \
     tmux \
     screen \
-    ping \
     tar \
     xz \
     tree \
