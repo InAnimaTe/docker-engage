@@ -24,5 +24,6 @@ RUN apk --update add bash \
     unzip \
     rsync \
     tcpdump
-    
-CMD ["/bin/bash"]
+    unrar
+
+CMD ["/bin/zsh"]
