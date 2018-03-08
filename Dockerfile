@@ -28,6 +28,7 @@ RUN apk --update --no-cache add bash \
     && rm -rf /var/cache/apk/*
 
 COPY echo-server /echo-server
+COPY httpstat-bin /bin/httpstat
 COPY run /
 RUN chmod +x /run /echo-server/echo-server
 
