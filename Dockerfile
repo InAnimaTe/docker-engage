@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.7
 
 RUN apk --update --no-cache add bash \
       zsh \
@@ -30,7 +30,7 @@ RUN apk --update --no-cache add bash \
 COPY echo-server /echo-server
 COPY httpstat-bin /bin/httpstat
 COPY run /
-RUN chmod +x /run /echo-server/echo-server
+RUN chmod +x /run /bin/httpstat /echo-server/echo-server
 
 # When I fix echo-server to either have certs build in or not require them to start, this will go away.
 WORKDIR /echo-server
