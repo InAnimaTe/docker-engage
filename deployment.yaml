@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engage
+  labels:
+    app: engage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engage
+  template:
+    metadata:
+      labels:
+        app: engage
+    spec:
+      containers:
+      - name: engage
+        image: inanimate/engage
