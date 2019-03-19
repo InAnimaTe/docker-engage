@@ -29,7 +29,7 @@ RUN apk --update --no-cache add bash \
 
 COPY echo-server /echo-server
 COPY httpstat-bin /bin/httpstat
-COPY run /
+COPY run /run.sh
 RUN chmod +x /run /bin/httpstat /echo-server/echo-server
 
 # When I fix echo-server to either have certs build in or not require them to start, this will go away.
@@ -38,5 +38,5 @@ WORKDIR /echo-server
 ENV PORT 80
 ENV SSLPORT 443
 
-ENTRYPOINT ["/run"]
+ENTRYPOINT ["/run.sh"]
 CMD ["/echo-server/echo-server"]
