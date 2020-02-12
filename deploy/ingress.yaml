@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: engage
+  labels:
+    app: engage
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+  - host: engage.playground.stockx.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: engage
+          servicePort: 80
