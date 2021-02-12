@@ -1,7 +1,7 @@
-# docker-engage
+# Engage - Beast Mode Debugging!
 
 Engage is meant as a custom lightweight container image meant for providing a go-to debugging/troubleshooting environment in multiple scenarios.
-View the `Dockerfile` to see everything installed (i.e. dig, curl, telnet, psql, nmap, and more!).
+View the [`Dockerfile`](https://github.com/InAnimaTe/docker-engage/blob/master/Dockerfile) to see everything installed (i.e. dig, curl, telnet, psql, nmap, and more!).
 
 *Run Locally:*
 
