@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Welcome to Engage! There are a ton of tools in this container and echo-server is running so \"curl locahost\" for some quick details. More details here: https://github.com/InAnimaTe/docker-engage"
-echo "Starting $@ now!"
+echo -e "\nWelcome to Engage! There are a ton of tools in this container and echo-server is running so \"curl locahost\" for some quick details. \nMore details here: https://github.com/InAnimaTe/docker-engage"
+echo -e "\nStarting $@ now!\n"
 
 bash -x -c "$@"

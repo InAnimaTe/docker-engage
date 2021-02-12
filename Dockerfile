@@ -1,6 +1,7 @@
-FROM alpine:3.9
+FROM alpine:3.13
 
 RUN apk --update --no-cache add bash \
+      busybox-extras \
       zsh \
       curl \
       wget \
@@ -25,6 +26,9 @@ RUN apk --update --no-cache add bash \
       rsync \
       tcpdump \
       unrar \
+      redis \
+      postgresql-client \
+      mysql-client \
     && rm -rf /var/cache/apk/*
 
 COPY echo-server /echo-server
