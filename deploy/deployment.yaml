@@ -16,4 +16,10 @@ spec:
     spec:
       containers:
       - name: engage
-        image: inanimate/engage
+        image: inanimate/engage:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
