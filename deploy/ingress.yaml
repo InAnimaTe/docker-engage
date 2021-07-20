@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: engage
@@ -8,10 +8,12 @@ metadata:
     kubernetes.io/ingress.class: nginx-external
 spec:
   rules:
-  - host: engage.playground.stockx.io
+  - host: engage.example.com
     http:
       paths:
-      - path: /
-        backend:
-          serviceName: engage
-          servicePort: 80
+      - backend:
+          service: engage
+          port:
+            name: http
+        path: /
+        pathType: ImplementationSpecific
