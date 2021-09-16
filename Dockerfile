@@ -43,4 +43,4 @@ ENV PORT 80
 ENV SSLPORT 443
 
 ENTRYPOINT ["/run.sh"]
-CMD ["/echo-server/echo-server"]
+CMD ["/echo-server/echo-server & /usr/sbin/sshd -D -e & wait"]
