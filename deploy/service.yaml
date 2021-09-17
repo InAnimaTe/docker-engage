@@ -17,3 +17,7 @@ spec:
       port: 443
       targetPort: https
       name: https
+    - protocol: TCP
+      port: 22
+      targetPort: ssh
+      name: ssh
