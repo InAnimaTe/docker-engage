@@ -30,6 +30,7 @@ RUN apk --update --no-cache add bash \
       postgresql-client \
       mysql-client \
       openssh \
+      openssl \
     && rm -rf /var/cache/apk/* \
     # SSH Setup \
     && ssh-keygen -A \
