@@ -1,7 +1,18 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo -e "\nWelcome to Engage! There are a ton of tools in this container and echo-server is running so \"curl locahost\" for some quick details. \nMore details here: https://github.com/InAnimaTe/docker-engage"
-echo -e "\nStarting $@ now!\n"
 
-# Blast-off!
-bash -x -c "$@"
+if [ "$LOOPMODE" ] && [ $LOOPINTERVAL ]; then
+    echo ">> Entering LoopMode with interval $LOOPINTERVAL..."
+    while true
+    do
+        echo ">> Running given command..."
+        bash -x -c "$@"
+        echo ">> Beginning Sleep Internval for $LOOPINTERVAL ..."
+        sleep $LOOPINTERVAL
+    done
+else
+    echo -e "\nStarting given command $@ now!\n"
+    # Blast-off!
+    bash -x -c "$@"
+fi
