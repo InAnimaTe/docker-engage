@@ -70,5 +70,27 @@ X-Xss-Protection: 0
                                                                                 total:188ms
 ```
 
+## Loop Mode
+
+Engage can take a `command` you give it (i.e. via `docker-compose`) and run it
+in a while loop with interval `$LOOPINTERVAL` for you!
+
+To enable set both these environment variables (LOOPINTERVAL is any accepted timeframe `sleep` supports),
+```
+LOOPMODE=enabled
+LOOPINTERVAL=10000s
+```
+
+and pass your desired script or one-liner for immediate execution and recurring execution every `$LOOPINTERVAL`
+
+An example `command`:
+```
+docker run -ti inanimate/engage 'export NICEDATE=`date +"%Y-%m-%d_%H-%M"` && echo "starting backup with date $NICEDATE"'
+```
+
+This is especially useful if you need to run continuous checks on a process, make simple backup patterns, or have other fun usecases!
+
+> Note, the loop will continue indefinitely as `while true` does. Please ensure you kill the process to stop your desired script from continually running!
+
 
 Please feel free to open issues of cool features or other utilities you'd like to see. Also, feel free to use this as a base to fork from!
