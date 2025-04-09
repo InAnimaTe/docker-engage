@@ -70,15 +70,15 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
       pv \
       httrack \
     && rm -rf /var/cache/apk/* \
-    # Use q instead of dig - https://github.com/natesales/q \
+    ## Use q instead of dig - https://github.com/natesales/q \
     && curl -sSL https://github.com/natesales/q/releases/download/v0.19.2/q_0.19.2_linux_amd64.tar.gz | tar -xz -C /usr/local/bin q \
     && chmod +x /usr/local/bin/q \
     && chsh -s /bin/zsh root \
     && echo "alias dig='q'" >> /root/.zshrc \
-    # SSH Setup \
+    ## SSH Setup \
     && ssh-keygen -A \
     && echo -e "engage\nengage" | passwd root \
-    # chmod the rest of our utils we copied in earlier
+    ## Chmod the rest of our utils we copied in earlier \
     && chmod +x /run /bin/httpstat /echo-server/echo-server
 
 # When I fix echo-server to either have certs build in or not require them to start, this will go away.
