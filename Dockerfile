@@ -74,7 +74,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     && curl -sSL https://github.com/natesales/q/releases/download/v0.19.2/q_0.19.2_linux_amd64.tar.gz | tar -xz -C /usr/local/bin q \
     && chmod +x /usr/local/bin/q \
     && chsh -s /bin/zsh root \
-    && echo "alias dig='q'" >> /root/.zshrc \
+    && echo 'alias dig="q"' >> /root/.zshrc \
     ## SSH Setup \
     && ssh-keygen -A \
     && echo -e "engage\nengage" | passwd root \
