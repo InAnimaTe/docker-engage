@@ -1,16 +1,37 @@
-FROM alpine:3.13
+FROM alpine:3.21
 
-RUN apk --update --no-cache add bash \
+COPY echo-server /echo-server
+COPY httpstat-bin /bin/httpstat
+COPY ssh_banner /etc/issue.net
+COPY motd /etc/motd
+COPY run /run.sh
+
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk --update --no-cache add bash \
       busybox-extras \
+      coreutils \
+      hashdeep \
+      rhash \
       zsh \
+      shadow \
       curl \
       wget \
+      wget2 \
       bind-tools \
       drill \
       mtr \
       git \
       vim \
       nano \
+      ack \
+      bat \
+      file \
+      inotify-tools \
+      fd \
+      fdupes \
+      at \
       iproute2 \
       iputils \
       htop \
@@ -20,10 +41,18 @@ RUN apk --update --no-cache add bash \
       screen \
       tar \
       xz \
+      zstd \
+      lrzip \
+      par2cmdline \
       tree \
       zip \
       unzip \
       rsync \
+      rclone \
+      aria2 \
+      mediainfo \
+      dust \
+      ncdu \
       tcpdump \
       unrar \
       redis \
@@ -31,17 +60,26 @@ RUN apk --update --no-cache add bash \
       mysql-client \
       openssh \
       openssl \
+      sshfs \
+      jq \
+      yq \
+      lftp \
+      ncftp \
+      yt-dlp \
+      fio \
+      pv \
+      httrack \
     && rm -rf /var/cache/apk/* \
+    # Use q instead of dig - https://github.com/natesales/q \
+    && curl -sSL https://github.com/natesales/q/releases/download/v0.19.2/q_0.19.2_linux_amd64.tar.gz | tar -xz -C /usr/local/bin q \
+    && chmod +x /usr/local/bin/q \
+    && chsh -s /bin/zsh root \
+    && echo "alias dig='q'" >> /root/.zshrc \
     # SSH Setup \
     && ssh-keygen -A \
-    && echo -e "engage\nengage" | passwd root
-
-COPY echo-server /echo-server
-COPY httpstat-bin /bin/httpstat
-COPY ssh_banner /etc/issue.net
-COPY motd /etc/motd
-COPY run /run.sh
-RUN chmod +x /run /bin/httpstat /echo-server/echo-server
+    && echo -e "engage\nengage" | passwd root \
+    # chmod the rest of our utils we copied in earlier
+    && chmod +x /run /bin/httpstat /echo-server/echo-server
 
 # When I fix echo-server to either have certs build in or not require them to start, this will go away.
 WORKDIR /echo-server
