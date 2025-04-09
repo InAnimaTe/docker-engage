@@ -12,7 +12,6 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     apk --update --no-cache add bash \
       busybox-extras \
       coreutils \
-      hashdeep \
       rhash \
       zsh \
       shadow \
@@ -46,6 +45,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
       par2cmdline \
       tree \
       zip \
+      7zip \
       unzip \
       rsync \
       rclone \
@@ -54,7 +54,6 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
       dust \
       ncdu \
       tcpdump \
-      unrar \
       redis \
       postgresql-client \
       mysql-client \
