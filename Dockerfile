@@ -73,7 +73,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     && curl -sSL https://github.com/natesales/q/releases/download/v0.19.2/q_0.19.2_linux_amd64.tar.gz | tar -xz -C /usr/local/bin q \
     && chmod +x /usr/local/bin/q \
     && chsh -s /bin/zsh root \
-    && echo 'alias dig="q"' >> /root/.zshrc \
+    # && echo 'alias dig="q"' >> /root/.zshrc \
     ## SSH Setup \
     && ssh-keygen -A \
     && echo -e "engage\nengage" | passwd root \
@@ -85,6 +85,7 @@ WORKDIR /echo-server
 
 ENV PORT 80
 ENV SSLPORT 443
+ENV SSHPORT 22
 
 ENTRYPOINT ["/run.sh"]
-CMD ["/echo-server/echo-server & /usr/sbin/sshd -D -e -o PermitRootLogin=yes -o Banner=/etc/issue.net & wait"]
+CMD ["/echo-server/echo-server & /usr/sbin/sshd -D -e -o Port=${SSHPORT} -o PermitRootLogin=yes -o Banner=/etc/issue.net & wait"]

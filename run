@@ -2,6 +2,9 @@
 
 echo -e "\nWelcome to Engage! There are a ton of tools in this container and echo-server is running so \"curl locahost\" for some quick details. \nMore details here: https://github.com/InAnimaTe/docker-engage"
 
+# Consume a different ssh port, or use the default.
+SSHPORT=${SSHPORT:-22}
+
 if [ "$LOOPMODE" ] && [ $LOOPINTERVAL ]; then
     echo ">> Entering LoopMode with interval $LOOPINTERVAL..."
     while true
