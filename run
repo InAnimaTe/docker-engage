@@ -20,7 +20,11 @@ if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
   DROPUSERPASSWORD="${DU_PASS:-engage}"
   echo -e "${DROPUSERPASSWORD}\n${DROPUSERPASSWORD}" | passwd ${DROPUSER}
 
-  echo "Enabling the user to switch to root via su command.."
+  # Grant the dropuser sudo privileges without a password
+  echo "Enabling the user to use sudo and su as root.."
+
+  echo "${DROPUSER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${DROPUSER}
+  chmod 0440 /etc/sudoers.d/${DROPUSER}
   chmod 4755 $(which su)
 fi
 
