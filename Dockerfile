@@ -14,6 +14,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
       coreutils \
       rhash \
       zsh \
+      sudo \
       shadow \
       curl \
       wget \
