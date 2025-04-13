@@ -5,6 +5,22 @@ echo -e "\nWelcome to Engage! There are a ton of tools in this container and ech
 # Consume a different ssh port, or use the default.
 SSHPORT=${SSHPORT:-22}
 
+# Check if the required environment variables are defined
+if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
+  # Use DROPGROUP if set; otherwise, default to DROPUSER as the group name.
+  GROUPNAME="${DROPGROUP:-$DROPUSER}"
+  
+  echo "Creating group '${GROUPNAME}' with GID ${DU_GID}..."
+  groupadd -g "${DU_GID}" "${GROUPNAME}"
+  
+  echo "Creating user '${DROPUSER}' with UID ${DU_UID}, primary GID ${DU_GID}, setting shell to /bin/zsh and not creating a home directory..."
+  useradd -N -M -u "${DU_UID}" -g "${DU_GID}" -s /bin/zsh "${DROPUSER}"
+
+  echo "Enabling the user to switch to root via su command.."
+  chmod 4755 $(which su)
+fi
+
+
 if [ "$LOOPMODE" ] && [ $LOOPINTERVAL ]; then
     echo ">> Entering LoopMode with interval $LOOPINTERVAL..."
     while true
