@@ -16,6 +16,10 @@ if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
   echo "Creating user '${DROPUSER}' with UID ${DU_UID}, primary GID ${DU_GID}, setting shell to /bin/zsh and not creating a home directory..."
   useradd -N -M -u "${DU_UID}" -g "${DU_GID}" -s /bin/zsh "${DROPUSER}"
 
+  echo "Setting dropuser password to ensure they are not locked.."
+  DROPUSERPASSWORD="${DU_PASS:-engage}"
+  echo -e "${DROPUSERPASSWORD}\n${DROPUSERPASSWORD}" | passwd ${DROPUSER}
+
   echo "Enabling the user to switch to root via su command.."
   chmod 4755 $(which su)
 fi
