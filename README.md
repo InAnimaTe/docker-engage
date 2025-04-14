@@ -70,6 +70,66 @@ X-Xss-Protection: 0
                                                                                 total:188ms
 ```
 
+## DROPUSER Configuration
+
+`docker-engage` allows you to drop privileges by creating a non-root user at runtime. This is done by setting several environment variables that will update `/etc/passwd` and `/etc/group`. When these variables are supplied, the container’s startup script automatically creates the user and grants passwordless `sudo` privileges.
+
+> *Note this functionality is entirely optional. Merely cease passing any of these variables and use `root` by default.*
+
+### Environment Variables
+
+- **`DROPUSER` (required):**  
+  The username that will be created inside the container.  
+  _Example:_ `inanimate`
+
+- **`DU_UID` (required):**  
+  The user ID (UID) for the new user.  
+  _Example:_ `1000`
+
+- **`DU_GID` (required):**  
+  The group ID (GID) for the new user's primary group.  
+  _Example:_ `1000`
+
+- **`DU_PASS` (optional):**  
+  An optional password to set for the $DROPUSER, default is `engage`  
+  _Example:_ `plzdonthackme`
+
+- **`DROPGROUP` (optional):**  
+  The name of the group to be created. If not provided, the group name defaults to the value of `DROPUSER`.
+
+### How It Works
+
+When the required environment variables are set, the container's `run` script will perform the following steps:
+
+1. **Create a Group:**  
+   A group is created with the specified GID. If the `DROPGROUP` variable is provided, that group name is used; otherwise, it defaults to the `DROPUSER` value.
+
+2. **Create a User:**  
+   A new user is created with the specified UID and primary group using the following options:
+   - **`-N`**: Do not create a group with the same name as the user.
+   - **`-M`**: Do not create a home directory.
+   - **`-s /bin/zsh`**: Set the login shell to Zsh.
+  
+   The home directory will be set to the default of `/home/$DROPUSER`. Mount any storage you want to be persistent for this user to this directory.
+
+3. **Grant Sudo Privileges:**  
+   A sudoers file is created that grants the new user passwordless `sudo` access. `su` is also enabled.
+
+*Protip:* Use `sudo -E -s` instead of `sudo su` to launch a root shell which maintains the `$DROPUSER`'s environment (`$HOME`, `$SHELL`, etc.).
+
+### Example Usage
+
+You can pass these environment variables when running your container. For example, using Docker:
+
+```bash
+docker run \
+  -e DROPUSER=inanimate \
+  -e DU_UID=1000 \
+  -e DU_GID=1000 \
+  -e DROPGROUP=king \
+  inanimate/engage:latest
+```
+
 ## Loop Mode
 
 Engage can take a `command` you give it (i.e. via `docker-compose`) and run it
