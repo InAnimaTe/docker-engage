@@ -18,6 +18,14 @@ kubectl apply -f deploy/deployment.yaml
 
 > Other objects exist in `deploy/` like ingress, pdb, and service!
 
+## Optional Variables
+
+* `PORT` - Defines the HTTP listen port for `echo-server`, defaults to 80
+* `SSLPORT` - Defines the HTTPS listen port for `echo-server`, defaults to 443
+* `SSHPORT` - Defines the SSH Daemon listen port for ssh connections, defaults to 22
+
+See below for more optional variables depending on how you want to use Engage!
+
 ## Echo Server
 
 Additionally, https://github.com/inanimate/echo-server is included which provides a simple http server that prints out basic details and other useful troubleshooting information.
