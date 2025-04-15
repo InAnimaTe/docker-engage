@@ -5,6 +5,15 @@ echo -e "\nWelcome to Engage! There are a ton of tools in this container and ech
 # Consume a different ssh port, or use the default.
 SSHPORT=${SSHPORT:-22}
 
+## Set up user desired timezone
+if [ -n "$TZ" ] && [ -f "/usr/share/zoneinfo/$TZ" ]; then
+  ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
+  echo "$TZ" > /etc/timezone
+else
+  echo "Warning: Invalid or missing TZ. Defaulting to UTC."
+fi
+
+## Dropuser setup
 # Check if the required environment variables are defined
 if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
   # Use DROPGROUP if set; otherwise, default to DROPUSER as the group name.
@@ -28,7 +37,7 @@ if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
   chmod 4755 $(which su)
 fi
 
-
+## Loopmode check and execute if desired
 if [ "$LOOPMODE" ] && [ $LOOPINTERVAL ]; then
     echo ">> Entering LoopMode with interval $LOOPINTERVAL..."
     while true
@@ -40,6 +49,6 @@ if [ "$LOOPMODE" ] && [ $LOOPINTERVAL ]; then
     done
 else
     echo -e "\nStarting given command $@ now!\n"
-    # Blast-off!
+    ### Blast-off!
     bash -x -c "$@"
 fi
