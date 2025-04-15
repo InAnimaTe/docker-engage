@@ -12,6 +12,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
     apk --update --no-cache add bash \
       busybox-extras \
       coreutils \
+      tzdata \
       rhash \
       zsh \
       sudo \
@@ -84,6 +85,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
 # When I fix echo-server to either have certs build in or not require them to start, this will go away.
 WORKDIR /echo-server
 
+ENV TZ UTC
 ENV PORT 80
 ENV SSLPORT 443
 ENV SSHPORT 22
