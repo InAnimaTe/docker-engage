@@ -75,7 +75,7 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositor
       pv \
       httrack \
     ## Install all man pages for all installed apps
-    && apk list -I | sed -rn '/-doc/! s/([a-z0-9@+~_-]+)[-].*/\1/p' | xargs -r apk --update --nocache add -q \
+    && apk list -I | sed -rn '/-doc/! s/([a-z0-9@+~_-]+)[-].*/\1/p' | xargs -r apk --update --no-cache add -q \
     && rm -rf /var/cache/apk/* \
     ## Use q instead of dig - https://github.com/natesales/q \
     && curl -sSL https://github.com/natesales/q/releases/download/v0.19.2/q_0.19.2_linux_amd64.tar.gz | tar -xz -C /usr/local/bin q \
