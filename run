@@ -14,8 +14,8 @@ else
 fi
 
 ## Dropuser setup
-# Check if the required environment variables are defined
-if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ]; then
+# Check if the required environment variables are defined and the user doesn't already exist - protects against container restarts with same fs
+if [ -n "${DROPUSER}" ] && [ -n "${DU_UID}" ] && [ -n "${DU_GID}" ] && ! id "${DROPUSER}" >/dev/null 2>&1; then
   # Use DROPGROUP if set; otherwise, default to DROPUSER as the group name.
   GROUPNAME="${DROPGROUP:-$DROPUSER}"
   
